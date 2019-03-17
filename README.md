@@ -1,2 +1,2 @@
 # diplom
-Bakalavr diplom project python amazon s3
+Bakalavr diplom project python Django
