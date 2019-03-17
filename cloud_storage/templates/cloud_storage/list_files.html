@@ -1,0 +1,130 @@
+{% extends 'cloud_storage/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if not error %}
+        <h2>Upload file</h2>
+        <form method="post" enctype="multipart/form-data" action="{% url 'upload_file' url_parent_id %}">
+            {% csrf_token %}
+            {{ file_form | crispy }}
+            <button type="submit" class="btn btn-primary">Upload file</button>
+        </form>
+        <br>
+        <h2>Create Folder</h2>
+        <form method="post" action="{% url 'create_folder' url_parent_id %}">
+            {% csrf_token %}
+            {{ folder_form | crispy }}
+            <button type="submit" class="btn btn-primary">Create Folder</button>
+        </form>
+        <br><br><br>
+        <br>
+        <h4> FOLDERS</h4>
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for folder in folders %}
+                    <tr>
+                        <td>
+                            {{ folder.child_folder.id }}
+                        </td>
+                        <td>
+                            <a href="{{ folder.child_folder.name }}/">{{ folder.child_folder.name }}</a>
+                        </td>
+                        <td>
+                             <form method="post" action="{% url 'delete_folder' folder.child_folder.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <h3>FILES</h3>
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>
+                        Content
+                    </th>
+                    <th>
+                        Path
+                    </th>
+                    <th>
+                        Date Load
+                    </th>
+                    <th>
+                        Download
+                    </th>
+                    <th>
+                        Share
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in  files %}
+                    <tr>
+                        <td>
+                            <img src="{{ file.content.url }}" alt="pic" width="100px" height="100px">
+                        </td>
+                        <td>
+                            {{ file.id }}
+                        </td>
+                        <td>
+                            {{ file.date_load }}
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Share</button>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <form action="{% url 'shared_files_post' file.id %}" method="post">
+                                        <div class="modal-header">
+                                           <h5 class="modal-title" id="exampleModalCenterTitle">Share</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            <p>
+                                                Enter username -> <input type="text" name="username" required>
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Share File</button>
+                                        </div>
+                                      </form>
+                                  </div>
+                                </div>
+                          </div>
+                        </td>
+                        <td>
+                            <form method="post" action="{% url 'delete_file' file.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-danger">FOLDER NOT FOUND<p>
+    {% endif %}
+{% endblock %}

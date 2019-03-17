@@ -1,0 +1,15 @@
+{% extends 'cloud_storage/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h3>SHARED FILES</h3>
+    {% for file in files_shared %}
+        <p>
+        Image <img src="{{ file.file.content.url }}" alt="pic" width="100px" height="100px">
+        </p>
+    {% endfor %}
+
+
+{% endblock %}
