@@ -1,2 +1,3 @@
 # diplom
-Bakalavr diplom project python Django
+Django project
+Amazon S3 storage
