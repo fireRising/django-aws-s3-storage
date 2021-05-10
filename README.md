@@ -1,3 +1,5 @@
-# Cloud storage
-Django framework <br>
-Amazon S3 storage
+# Bachelor thesis project - Cloud storage
+Tech stack: <ul>
+<li>Django framework</li>
+<li>Amazon S3 storage</li>
+  </ul>
