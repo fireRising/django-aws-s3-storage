@@ -1,4 +1,4 @@
-# Bachelor thesis project - Cloud storage web application
+#Cloud storage web application
 Tech stack: <ul>
 <li>Django framework</li>
   <li>PostgreSQL </li>
