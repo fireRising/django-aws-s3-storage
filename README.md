@@ -1,4 +1,4 @@
-# Cloud storage web application
+# Cloud Storage Web Application
 Tech stack: <ul>
 <li>Django framework</li>
   <li>PostgreSQL </li>
